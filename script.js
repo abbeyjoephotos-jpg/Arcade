@@ -135,7 +135,7 @@ function showMatchPopup(message, resultType) {
         matchMedia.alt = "Fireworks Celebration";
     }
 
-    else (resultType === "lose") {
+    else if (resultType === "lose") {
         matchMedia.src = "images/gameover.jpg";
         matchMedia.alt = "Game Over";
     }
