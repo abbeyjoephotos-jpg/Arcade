@@ -4,10 +4,71 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>RockPaperScissor</title>
-
+        <link rel="stylesheet" href="style.css">
         <script src="script.js" defer></script>
     </head>
     <body>
-    
+        <hearder>
+            <p class="hero">Rock, Paper, Scissors!</p>
+        </hearder>
+        <div class="scoreboard">
+            <div class="score-side">
+                <h2>Player:</h2>
+                
+                <div class="score-window">
+                    <div id="player-match-display" class="seven-segment">
+                        <span class="segment top"></span>
+                        <span class="segment upper-left"></span>
+                        <span class="segment upper-right"></span>
+                        <span class="segment middle"></span>
+                        <span class="segment lower-left"></span>
+                        <span class="segment lower-right"></span>
+                        <span class="segment bottom"></span>
+                    </div>
+                </div>
+                <div class="dots player-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="score-side">
+                <h2>Computer:</h2>
+                <div class="score-window">
+                    <div id="computer-match-display" class="seven-segment">
+                        <span class="segment top"></span>
+                        <span class="segment upper-left"></span>
+                        <span class="segment upper-right"></span>
+                        <span class="segment middle"></span>
+                        <span class="segment lower-left"></span>
+                        <span class="segment lower-right"></span>
+                        <span class="segment bottom"></span>
+                    </div>
+                </div>
+
+                <div class="dots computer-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+             </div>
+        </div>
+        <div id="bubble-buttons">
+            <div id="top">
+                <button id="rock">(ROCK)</button>
+                <button id="paper">(PAPER)</button>
+            </div>
+            <button id="scissors">(SCISSORS)</button>
+        </div>
+
+        <!--Match winner popup-->
+
+        <div id="match-popup" class="hidden">
+            <div class="popup-box">
+                <h2 id="match-message"></h2>
+                <button id="next-match">NEXT MATCH!</button>
+                <button id="reset">RESET GAME!</button>
+           </div>
+        </div>
     </body>
 </html>

@@ -1,0 +1,200 @@
+* {
+    background-color: black;
+    border:2px solid red;
+}
+body {
+    background-image: url(https://chatgpt.com/backend-api/estuary/content?id=file_00000000add471fdb4903c40cb82cc9a&ts=495426&p=fs&cid=1&sig=343f6d24b2277de87aeaca188ecca6d7817dc0f032ea456af06da6c6e763c2a2&v=0);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+    .scoreboard {
+    width: 400px;
+    margin: 40px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    text-align: center;
+    border: 2px solid white;
+}
+#new-game {
+    display: flex;
+    justify-content: center;  
+}
+#reset {
+    background-color: #af0606;
+    color: #f7f4f4;
+    font-family: monospace;
+    font-size: 14px;
+    padding: 15px 30px;
+    height: 60px;
+    width: 100px;
+    display: flex;
+    text-align: center;;
+}
+.score-side {
+    width: 45%;
+    border: 2px solid white;
+}
+.dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    border: 2px solid white;
+}
+.dot-active {
+    background: radial-gradient(circle,
+        #ff9b9b 0%,
+        #ff2a2a 55%,
+        #900000 100%);
+
+        box-shadow:
+        0 0 8px #ff4d4d,
+        0 0 18px #ff0000,
+        0 0 30px rgba(255, 0, 0, 0.8);
+}
+/* Display frame around 7 segment match score */
+.score-window {
+    width: 110px;
+    height: 155px;
+    margin: 15px auto 20px;
+    border: 4px double #6b6969;
+    border-radius: 10px;
+    background-color: #050000;
+    box-shadow:
+        inset 0 0 18px rgba(255, 0, 0, 0.25),
+        0 0 10px rgba(255, 0, 0, 0.45);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* All segments dim/off */
+.segment {
+    position: absolute;
+    background-color: #280000;
+    box-shadow: none;
+    opacity: 0.35;
+    border-radius: 5px;
+}
+/* Horizontal segments*/
+
+.top,
+.middle,
+.bottom {
+    width: 50px;
+    height: 10px;
+    left: 10px;
+}
+.top {
+    top: 0;
+}
+.middle {
+    top: 55px;
+}
+.bottom {
+    bottom: 0;
+}
+/* Vertical segments */
+.upper-left,
+.upper-right,
+.lower-left,
+.lower-right {
+    width: 10px;
+    height: 50px;
+}
+.upper-left {
+    top: 5px;
+    left: 0;
+}
+.upper-right {
+    top: 5px;
+    right: 0;
+}
+.lower-left {
+    bottom: 5px;
+    left: 0;
+}
+.lower-right {
+    bottom: 5px;
+    right: 0;
+}
+/* When segments lit */
+.segment.on {
+    background: #ff2a2a;
+    box-shadow:
+        0 0 6px #ff4d4d,
+        0 0 14px #ff0000,
+        0 0 28px rgba(255, 0, 0, 0.8);
+    opacity: 1;
+}
+
+
+.dots span {
+    width: 18px;
+    height: 18px;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+h2 {
+    font-size: 24px;
+    color: bisque;
+}
+.hero {
+    color: greenyellow;
+    font-size: 80px;
+    font-family: monospace;
+    margin-bottom: 0%;
+    margin-top: 0%;
+    display: flex;
+    justify-content: center;
+}
+#bubble-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 200px;
+    height: 100vh;
+}   
+
+#top {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+button {
+    background-color: #8f58dc;
+    color: #ffffff;
+    font-family: monospace;
+    padding: 15px 30px;
+    height: 133px;
+    width: 400px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 15px 30px whitesmoke;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+button:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 10px 20px rgba(196, 196, 196, 0.2);
+}
+#rock {
+    margin-right: 75px;
+    font-size: 48px;
+}
+#paper {
+    margin-left: 75px;
+    font-size: 48px;
+}
+#scissors {
+    font-size: 48px;
+}
+/* popup */
+
+.hidden {
+    display: none;
+}
