@@ -1,50 +1,146 @@
-// Define choices
-let choice = ['rock', 'paper', 'scissors'];
-// Randomly generate computer choices
-function getComputerChoice(choice){
-    return choice[Math.floor(Math.random() * choice.length)];
-}
-// Input player choice; Determine winner
-function round (playerSelection,computerSelection){
-    if (playerSelection===computerSelection){
-        return "It's a tie. You both picked the same choice!" ;
-    }
-    else if (playerSelection==="rock" && computerSelection==="scissors"){
-        return "You win! Rock beats Scissors!";
-    }
-    else if (playerSelection==="paper" && computerSelection==="rock"){
-        return "You win! Paper beats Rock!";
-    }
-    else if (playerSelection==="scissors" && computerSelection==="paper"){
-        return "You win! Scissors beats Paper!";
-    }
-    else {
-        return "You lose!"
-    }
-}
+// Difine choices //
+const choices = ["rock", "paper", "scissors"];
 
-const playerDots = document.querySelectorAll(".player-dots span");
-const computerDots = document.querySelectorAll(".computer-dots span");
-
-const playerMatchDisplay = document.querySelector("#player-match-display");
-const computerMatchDisplay = document.querySelector("#computer-match-display");
-
-const rockButton = document.querySelector("#rock");
-const paperButton = document.querySelector("#paper");
-const scissorsButton = document.querySelector("#scissors");
-
-// match total wins //
-
+const choiceImages = {
+    rock: "images/buttonrock.png",
+    paper: "images/buttonpaper.png",
+    scissors: "images/buttonscissors.png"
+};
+// Game starting points //
 const match = {
+// Current best of 5 match //
     user: 0,
     computer: 0,
+// Total match win count //
     userMatches: 0,
     computerMatches: 0,
-    targetWins: 3
+// First to 3 wins //
+    targetWins: 3,
 };
+// Prevents buttons pressed during animation //
+let roundIsRunning = false;
+// Select HTML elements //
 
-// seven segment function //
+//---------Score dots ---------//
+const playerDots = 
+document.querySelectorAll(".player-dots span");
 
+const computerDots = 
+document.querySelectorAll(".computer-dots span");
+
+//---------Seven segment display--------//
+const playerMatchDisplay =
+document.querySelector("#player-match-display");
+
+const computerMatchDisplay =
+document.querySelector("#computer-match-display");
+
+//---------Choice Buttons---------//
+const rockButton = 
+document.querySelector("#rock");
+
+const scissorsButton = 
+document.querySelector("#scissors");
+
+const paperButton = 
+document.querySelector("#paper");
+
+// Button array to enable and disable easily //
+const choiceButtons = [rockButton, scissorsButton, paperButton];
+
+// Round status screen //
+const playerChoiceImage = 
+document.querySelector("#player-choice-image");
+
+const computerChoiceImage =
+document.querySelector("#computer-choice-image");
+
+const roundResultText =
+document.querySelector("#round-result-text");
+
+// Match winner popup //
+const matchPopup =
+document.querySelector("#match-popup");
+
+const matchMessage =
+document.querySelector("#match-message");
+
+const matchMedia =
+document.querySelector("#match-media");
+
+const nextGameButton =
+document.querySelector("#next-game");
+
+const resetGameButton =
+document.querySelector("#reset-game");
+
+// Make random computer choice //
+function getComputerChoice() {
+    const randomIndex =
+        Math.floor(Math.random() * choices.length);
+
+    const computerChoice =
+        choices[randomIndex];
+
+    return computerChoice;
+}
+// Determine who wins round //
+function round(playerSelection, computerSelection) {
+//---------Tie--------//
+if (playerSelection === computerSelection) {
+    return {
+        winner: "tie", 
+        message: 
+            `It's a tie! You both chose ${playerSelection.toUpperCase()}.`
+    };
+}
+//---------Player winner---------//
+else if (playerSelection === "rock" && computerSelection === "scissors") {
+    return {
+        winner: "user",
+        message:
+            "You win! Rock crushes scissors!"
+    };
+}
+else if (playerSelection === "paper" && computerSelection === "rock") {
+    return {
+        winner: "user",
+        message:
+            "You win! Paper covers rock!"
+    };
+}
+else if (playerSelection === "scissors" && computerSelection === "paper") {
+    return {
+        winner: "user",
+        message:
+            "You win! Scissors cut paper!"
+    };
+}
+//--------Computer winner--------//
+else if (computerSelection === "rock" && playerSelection === "scissors") {
+    return {
+        winner: "computer",
+        message:
+            "You lost! Computer chooses rock!"
+    };
+}
+else if (computerSelection === "paper" && playerSelection === "rock") {
+    return {
+        winner: "computer",
+        message:
+            "You lost! Computer chooses paper!"
+    };
+}
+else {
+    return {
+        winner: "computer",
+        message:
+            "You lost! Computer chooses scissors!"
+        };
+    }
+}
+
+// Seven segment display logic //
 function setDigit(display, number) {
     const segmentMap = {
         0: ["top", "upper-left", "upper-right", "lower-left", "lower-right", "bottom"],
@@ -52,159 +148,293 @@ function setDigit(display, number) {
         2: ["top", "upper-right", "middle", "lower-left", "bottom"],
         3: ["top", "upper-right", "middle", "lower-right", "bottom"],
         4: ["upper-left", "upper-right", "middle", "lower-right"],
-        5: ["top", "upper-right", "middle", "lower-left", "bottom"],
+        5: ["top", "upper-left", "middle", "lower-right", "bottom"],
         6: ["top", "upper-left", "middle", "lower-left", "lower-right", "bottom"],
         7: ["top", "upper-right", "lower-right"],
         8: ["top", "upper-left", "upper-right", "middle", "lower-left", "lower-right", "bottom"],
-        9: ["top", "upper-left", "upper-right", "middle", "lower-right", "bottom"],
+        9: ["top", "upper-left", "upper-right", "middle", "lower-right", "bottom"]
     };
-    const segments = display.querySelectorAll(".segment");
-        segments.forEach(function(segment) {
-            segment.classList.remove("on");
-        });
 
-        segmentMap[number].forEach(function(segmentName) {
-            display.querySelector("." + segmentName).classList.add("on");
-        });           
-        }
-// Set both counts to 0 when page loads //
+    const segments =
+        display.querySelectorAll(".segment");
 
+    segments.forEach(function (segment) {
+        segment.classList.remove("on");
+    });
+
+    const segmentsToTurnOn =
+        segmentMap[number];
+
+    segmentsToTurnOn.forEach(function (segmentName) {
+        const segment =
+            display.querySelector("." + segmentName);
+
+        segment.classList.add("on");
+    });
+}
+
+// Both matches start at 0
 setDigit(playerMatchDisplay, 0);
 setDigit(computerMatchDisplay, 0);
 
-// button event listeners //
+// Prevents additional button presses while round is running //
+function disableChoiceButtons() {
+    choiceButtons.forEach(function (button) {
+        button.disabled = true;
+    });
+}
 
-rockButton.addEventListener("click", function() {
-    playRoundFromButton("rock");
-});
-paperButton.addEventListener("click", function() {
-    playRoundFromButton("paper");
-});
-scissorsButton.addEventListener("click", function() {
-    playRoundFromButton("scissors");
-});
+// Turns choice buttons back on after round animation completes //
+function enableChoiceButtons() {
+    choiceButtons.forEach(function (button) {
+        button.disabled = false;
+    });
+}  
 
-// press button to play function //
+// show and rolling effects after choices made //
 
-function playRoundFromButton(playerSelection) {
-    if (match.user >= match.targetWins || match.computer >= match.targetWins){
-        console.log("Game over, please press reset for another round.");
+//-------show player choice-------//
+function showPlayerChoice(playerSelection) {
+    
+    playerChoiceImage.src =
+        choiceImages[playerSelection];
+    
+    playerChoiceImage.alt = 
+    `Player chose ${playerSelection}`;
+
+    playerChoiceImage.style.visibility = "visible";
+}
+
+
+//-------Rolling effect for computer choice------//
+function rollComputerChoice(computerSelection) {
+    return new Promise(function (resolve) {
+        let currentChoiceIndex = 0;
+        
+        computerChoiceImage.style.visibility = "visible";
+
+        const rollingInterval = setInterval(function () {
+            const rollingChoice = choices[currentChoiceIndex];
+
+            computerChoiceImage.src = choiceImages[rollingChoice];
+
+            computerChoiceImage.alt = `Computer rolling: ${rollingChoice}`;
+            currentChoiceIndex++;
+
+            if (currentChoiceIndex === choices.length) {
+                currentChoiceIndex = 0
+            }            
+        }, 120);
+        
+        setTimeout(function (){
+            clearInterval(rollingInterval);
+            computerChoiceImage.src = choiceImages[computerSelection];
+            computerChoiceImage.alt = `Computer chose ${computerSelection}`;
+            
+            resolve();
+        }, 2000);
+    });
+}
+
+// Play one round //
+async function playRoundFromButton(buttonChoice) {
+    if (roundIsRunning === true) {
         return;
     }
-const computerSelection = getComputerChoice(choice);
-const winner = round(playerSelection, computerSelection);
 
-    if (winner === "user") {
-        updateScore("user");
+    // Don't allow more rounds once best of 5 match is over//
+if (match.user >= match.targetWins || match.computer >= match.targetWins) {
+    return;
     }
-    else if (winner === "computer") {
-        updateScore("computer");
+
+// Lock buttons until round finished //
+roundIsRunning = true;
+disableChoiceButtons();
+
+// Remove previous rounds message //
+roundResultText.textContent = "";
+roundResultText.className = "";
+
+// Player Selection //
+const playerSelection = buttonChoice;
+
+playerChoiceImage.src = choiceImages[playerSelection];
+playerChoiceImage.alt = playerSelection;
+playerChoiceImage.style.visibility = "visible";
+
+//-------Computer Selection-------//
+const computerSelection = getComputerChoice();
+
+await rollComputerChoice(computerSelection);
+
+//------Determine winner-------//
+const roundResult = round(playerSelection, computerSelection);
+
+//-------Display Result-------//
+roundResultText.textContent = roundResult.message;
+
+if (roundResult.winner === "user") {
+    roundResultText.classList.add("round-win");
+    }
+else if (roundResult.winner === "computer") {
+    roundResultText.classList.add("round-loss");
+}
+else {
+    roundResultText.classList.add("round-tie");
+    }
+
+
+// Update the score //
+const matchFinished = updateScore(roundResult.winner);
+
+// Re engage buttons //
+roundIsRunning = false;
+if (matchFinished === false){
+    enableChoiceButtons();
     }
 }
 
-// score keeper function //
+// Score update round and match //
 function updateScore(winner) {
+
+    //------Player wins round-------//
     if (winner === "user") {
-        playerDots[match.user].classList.add("dot-active");
-        match.user++;
+        const nextPlayerDot = playerDots[match.user];
+
+    nextPlayerDot.classList.add("dot-active");
+    match.user++
     }
-    
+    //-------Computer wins roound-------//
     else if (winner === "computer") {
-        playerDots[match.computer].classList.add("dot-active");
-        match.computer++;
+        const nextComputerDot = computerDots[match.computer];
+
+    nextComputerDot.classList.add("dot-active");
+    match.computer++;
+    }
+    //-------Round ties-------//
+    else {
+        return false;
     }
     
+    //------Player wins a match------//
     if (match.user === match.targetWins) {
         match.userMatches++;
+
         setDigit(playerMatchDisplay, match.userMatches);
-        showMatchPopup("You Won the Match. Press Next Game!", "win");
+
+        showMatchPopup("You Won the Match!", "win");
+        return true;
     }
-    
+
+    //-------Computer wins match------//
     if (match.computer === match.targetWins) {
         match.computerMatches++;
+
         setDigit(computerMatchDisplay, match.computerMatches);
-        showMatchPopup("Better Luck Next Time, Computer Wins.  Press Next Game!", "win");
+
+        showMatchPopup("Computer wins the match!", "lose");
+        return true;
     }
+    //-------If nobody has won yeet-------//
+    return false;
 }
-// popup  function //
+
+// Match popup //
+
 function showMatchPopup(message, resultType) {
+
     matchMessage.textContent = message;
 
     if (resultType === "win") {
         matchMedia.src = "images/fireworks.gif";
-        matchMedia.alt = "Fireworks Celebration";
+        matchMedia.alt = "Fireworks Display";
     }
-
-    else if (resultType === "lose") {
+    else {
         matchMedia.src = "images/gameover.jpg";
         matchMedia.alt = "Game Over";
     }
 
     matchPopup.classList.remove("hidden");
 }
-// Clear only round dots for best of 5 game //
 
+
+// Disable dots //
 function clearRoundDots() {
     playerDots.forEach(function(dot) {
         dot.classList.remove("dot-active");
     });
 
     computerDots.forEach(function(dot) {
-        dot.classList.remove("dot-active")
+        dot.classList.remove("dot-active");
     });
 }
-// Next best of 5 match //
 
+// Clear status screen //
+function clearStatusScreen() {
+    playerChoiceImage.src = "";
+    playerChoiceImage.alt = "";
+    playerChoiceImage.style.visibility = "hidden";
+
+    computerChoiceImage.src = "";
+    computerChoiceImage.alt = "";
+    computerChoiceImage.style.visibility = "hidden";
+
+    roundResultText.textContent = "";
+    roundResultText.className = "";
+} 
+
+// Start next match //
 function nextGame() {
     match.user = 0;
     match.computer = 0;
 
     clearRoundDots();
+    clearStatusScreen();
 
     matchPopup.classList.add("hidden");
+    enableChoiceButtons();
 }
 
-// Reset full game //
-
+// Reset the entire game //
 function resetGame() {
     match.user = 0;
     match.computer = 0;
+
     match.userMatches = 0;
     match.computerMatches = 0;
 
     clearRoundDots();
-
+    clearStatusScreen();
+    
     setDigit(playerMatchDisplay, 0);
     setDigit(computerMatchDisplay, 0);
 
     matchPopup.classList.add("hidden");
+    
+    enableChoiceButtons();
 }
 
-nextGameButton.addEventListener("click", function() {
+// Button event listeners //
+rockButton.addEventListener("click", function () {
+    const buttonChoice = "rock";
+    playRoundFromButton(buttonChoice);
+});
+
+paperButton.addEventListener("click", function () {
+    const buttonChoice = "paper";
+    playRoundFromButton(buttonChoice);
+});
+
+scissorsButton.addEventListener("click", function () {
+    const buttonChoice = "scissors";
+    playRoundFromButton(buttonChoice);
+});
+
+//------Popup buttons------//
+nextGameButton.addEventListener("click", function (){
     nextGame();
 });
 
-resetGameButton.addEventListener("click", function() {
+resetGameButton.addEventListener("click", function () {
     resetGame();
 });
-
-// Add 1 round to whoever won the round //
-function updateScore(winner) {
-    if (winner === "user") {
-        playerDots[match.user].classList.add("dot-active");
-        match.user++;
-    }
-    else if (winner === "computer") {
-        computerDots[match.computer].classList.add("dot-active");
-        match.computer++;
-    }
-// see if user won the best of 5 match //
-
-if (match.user === match.targetWins) {
-    match.userMatches++;
-    setDigit(playerMatchDisplay, match.userMatches);
-    console.log(userWin)
-}
-
-}
-
