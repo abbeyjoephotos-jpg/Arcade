@@ -16,9 +16,15 @@ const match = {
     computerMatches: 0,
 // First to 3 wins //
     targetWins: 3,
+// First to 5 matches //
+    targetMatches: 5
 };
 // Prevents buttons pressed during animation //
 let roundIsRunning = false;
+
+// Tracks if game is done //
+let gameIsOver = false;
+
 // Select HTML elements //
 
 //---------Score dots ---------//
@@ -44,6 +50,12 @@ document.querySelector("#scissors");
 
 const paperButton = 
 document.querySelector("#paper");
+
+const choiceButtonMap = {
+    rock: rockButton,
+    paper: paperButton,
+    scissors: scissorsButton
+};
 
 // Button array to enable and disable easily //
 const choiceButtons = [rockButton, scissorsButton, paperButton];
@@ -73,6 +85,21 @@ document.querySelector("#next-game");
 
 const resetGameButton =
 document.querySelector("#reset-game");
+
+const gameOverPopup = 
+document.querySelector("#game-over-popup");
+
+const gameOverTitle =
+document.querySelector("#game-over-title");
+
+const gameOverImage =
+document.querySelector("#game-over-image");
+
+const gameOverMessage =
+document.querySelector("#game-over-message");
+
+const finalResetButton =
+document.querySelector("#final-reset-button");
 
 // Make random computer choice //
 function getComputerChoice() {
@@ -190,6 +217,11 @@ function enableChoiceButtons() {
         button.disabled = false;
     });
 }  
+function clearSelectedButton() {
+    choiceButtons.forEach(function (button) {
+        button.classList.remove("choice-selected");
+    });
+}
 
 // show and rolling effects after choices made //
 
@@ -241,6 +273,9 @@ async function playRoundFromButton(buttonChoice) {
     if (roundIsRunning === true) {
         return;
     }
+    if (gameIsOver === true) {
+        return;
+    }
 
     // Don't allow more rounds once best of 5 match is over//
 if (match.user >= match.targetWins || match.computer >= match.targetWins) {
@@ -258,6 +293,9 @@ roundResultText.className = "";
 // Player Selection //
 const playerSelection = buttonChoice;
 
+const selectedButton = choiceButtonMap[playerSelection];
+selectedButton.classList.add("choice-selected");
+
 playerChoiceImage.src = choiceImages[playerSelection];
 playerChoiceImage.alt = playerSelection;
 playerChoiceImage.style.visibility = "visible";
@@ -267,6 +305,7 @@ const computerSelection = getComputerChoice();
 
 await rollComputerChoice(computerSelection);
 
+clearSelectedButton();
 //------Determine winner-------//
 const roundResult = round(playerSelection, computerSelection);
 
@@ -317,14 +356,28 @@ function updateScore(winner) {
     }
     
     //------Player wins a match------//
+// Player wins a match
     if (match.user === match.targetWins) {
         match.userMatches++;
 
         setDigit(playerMatchDisplay, match.userMatches);
 
-        showMatchPopup("You Won the Match!", "win");
+    // Player has now won 5 complete matches
+    if (match.userMatches === match.targetMatches) {
+        gameIsOver = true;
+
+        disableChoiceButtons();
+
+        showGameOverPopup("player");
+
         return true;
     }
+
+    // Player won this match but has fewer than 5 total
+    showMatchPopup("You Won the Match!", "win");
+
+    return true;
+}
 
     //-------Computer wins match------//
     if (match.computer === match.targetWins) {
@@ -332,8 +385,16 @@ function updateScore(winner) {
 
         setDigit(computerMatchDisplay, match.computerMatches);
 
-        showMatchPopup("Computer wins the match!", "lose");
+    //-------Checks if computer reached 5 matches yet------//
+    if (match.computerMatches === match.targetMatches) {
+        gameIsOver = true;
+        disableChoiceButtons();
+        showGameOverPopup("computer");
         return true;
+        }
+    //-------Computer wins match but no one reaches 5 yet------//
+    showMatchPopup("COMPUTER WINS THE MATCH", "lose");
+    return true;
     }
     //-------If nobody has won yeet-------//
     return false;
@@ -353,8 +414,25 @@ function showMatchPopup(message, resultType) {
         matchMedia.src = "images/gameover.jpg";
         matchMedia.alt = "Game Over";
     }
-
     matchPopup.classList.remove("hidden");
+}
+function showGameOverPopup(winner) {
+    matchPopup.classList.add("hidden");
+
+    if (winner === "player") {
+        gameOverTitle.textContent = "YOU ARE THE CHAMPION!";
+        gameOverMessage.textContent = `Final Score: Player ${match.userMatches} -  ${match.computerMatches} Computer`;
+        gameOverImage.src = "images/Winner.gif";
+        gameOverImage.alt = "Final match winner";
+    }
+    else {
+        gameOverTitle.textContent = "GAME OVER, COMPUTER WINS!";
+        gameOverMessage.textContent = `Final Score: Player ${match.userMatches} - ${match.computerMatches} Computer`;
+        gameOverImage.src = "images/matchGameOver.gif";
+        gameOverImage.alt = "Final match loser";
+    }
+// Displays final popup //
+gameOverPopup.classList.remove("hidden");
 }
 
 
@@ -392,11 +470,15 @@ function nextGame() {
     clearStatusScreen();
 
     matchPopup.classList.add("hidden");
+    clearSelectedButton();
     enableChoiceButtons();
+
 }
 
 // Reset the entire game //
 function resetGame() {
+    gameIsOver = false;
+
     match.user = 0;
     match.computer = 0;
 
@@ -410,6 +492,9 @@ function resetGame() {
     setDigit(computerMatchDisplay, 0);
 
     matchPopup.classList.add("hidden");
+    gameOverPopup.classList.add("hidden");
+
+    clearSelectedButton();
     
     enableChoiceButtons();
 }
@@ -436,5 +521,9 @@ nextGameButton.addEventListener("click", function (){
 });
 
 resetGameButton.addEventListener("click", function () {
+    resetGame();
+});
+
+finalResetButton.addEventListener("click", function() {
     resetGame();
 });

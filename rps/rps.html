@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>RockPaperScissor</title>
+        <link rel="stylesheet" href="rps.css">
+        <script src="rps.js" defer></script>
+    </head>
+    <body>
+        <header>
+            <div class="title-box">
+                <p class="hero"> Rock, Paper, Scissors!</p>
+            </div>
+        </header>
+        <div id="instructions">
+            <p class="rules">~ INSTRUCTIONS: ~
+            <br>
+            - Click on you selection for rock, paper, or scissors -
+            <br>
+            - Each game is best out of 5 -
+            <br>
+            - First to 5 games won wins entire game -</p>
+        </div>
+        <div class="scoreboard">
+            <div class="score-side">
+                <h2>Player:</h2>
+                
+                <div class="score-window">
+                    <div id="player-match-display" class="seven-segment">
+                        <span class="segment top"></span>
+                        <span class="segment upper-left"></span>
+                        <span class="segment upper-right"></span>
+                        <span class="segment middle"></span>
+                        <span class="segment lower-left"></span>
+                        <span class="segment lower-right"></span>
+                        <span class="segment bottom"></span>
+                    </div>
+                </div>
+                <div class="dots player-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+            <div class="score-side">
+                <h2>Computer:</h2>
+                <div class="score-window">
+                    <div id="computer-match-display" class="seven-segment">
+                        <span class="segment top"></span>
+                        <span class="segment upper-left"></span>
+                        <span class="segment upper-right"></span>
+                        <span class="segment middle"></span>
+                        <span class="segment lower-left"></span>
+                        <span class="segment lower-right"></span>
+                        <span class="segment bottom"></span>
+                    </div>
+                </div>
+
+                <div class="dots computer-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+             </div>
+        </div>
+
+        <div id="round-screen">
+
+            <div class="screen-line">
+                <span class="screen-label">Player:</span>
+                <img id="player-choice-image" class="choice-display-image" src="" alt="">
+            </div>
+
+            <div class="screen-line">
+                <span class="screen-label">Computer:</span>
+                <img id="computer-choice-image" class="choice-display-image" src="" alt="">
+            </div>
+
+            <div class="screen-divider"></div>
+            
+            <div class="screen-line result-line">
+                <span class="screen-label">Result:</span>
+                <span id="round-result-text"></span>
+            </div>
+
+        </div>
+        <div id="bubble-buttons">
+            <div id="top">
+                <div id="rock-button">
+                    <button id="rock">
+                    <img src="images/buttonrock.png" alt="Rock" class="rockimg">
+                    </button>
+                </div>
+                <div id="paper-button">
+                    <button id="paper">
+                    <img src="images/buttonpaper.png" alt="Paper" class="paperimg">
+                    </button>
+                </div>
+            </div>
+            <div id="scissors-button">
+                <button id="scissors">
+                <img src="images/buttonscissors.png" alt="Scissors" class="scissorsimg">
+                </button>
+            </div>
+        </div>
+
+        <!--Match winner popup-->
+
+        <div id="match-popup" class="hidden">
+            <div class="popup-box">
+                <h2 id="match-message"></h2>
+
+                <img id="match-media" src="" alt="">
+
+                <button id="next-game">NEXT MATCH!</button>
+                <button id="reset-game">RESET GAME!</button>
+           </div>
+        </div>
+
+        <!--Final match win popup-->
+        <div id="game-over-popup" class="hidden">
+            <div class="game-over-box">
+                <h1 id="game-over-title">Game Over!</h1>
+                <img id="game-over-image" src="" alt="">
+                <p id="game-over-message"></p>
+                <button id="final-reset-button">RESET GAME</button>
+            </div>
+        </div>
+    </body>
+</html>
