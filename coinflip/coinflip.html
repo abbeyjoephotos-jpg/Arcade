@@ -14,11 +14,15 @@
             </div>
         </header>
         <div id="instructions">
-            <p class="rules">~ Instructions: ~
-            <br>
-            - Choose your side either heads or tails -
-            <br>
-            - First to 5 wins the game -</p>     
+            <div id="rules-top">
+                <p class="rules">~ Instructions: ~
+            </div>
+            <div id="rules-bottom">
+                <br>
+                - Choose your side either heads or tails -
+                <br>
+                - First to 5 wins the game -</p>
+            </div>  
         </div>
         <div class="dots-scoreboard">
             <div class="dots-scores">
@@ -47,8 +51,12 @@
             </div>
         </div>
         <div id="choice-buttons">
-            <button id="heads">(Heads)</button>
-            <button id="tails">(Tails)</button>
+            <button id="heads">
+                <img src="coinflipImages/headsImage.jpg" alt="Heads" class="heads-img">
+            </button>
+            <button id="tails">
+                <img src="coinflipImages/tailsImage.jpg" alt="tails" class="tails-img">
+            </button>
         </div>
         <div class="winner-screen">
             <div class="coinflip">
@@ -61,6 +69,16 @@
         </div>
         <div class="reset-game">
             <button class="reset-button">RESET GAME</button>
+        </div>
+
+        <!--Game over popup-->
+         <div id="game-over-popup" class="hidden">
+            <div class="game-over-box">
+                <h1 id="game-over-title">Game Over!</h1>
+                <img id="game-over-image" src="" alt="">
+                <p id="game-over-message"></p>
+                <button id="final-reset-button">RESET GAME</button>
+            </div>
         </div>
     </body>
 </html>

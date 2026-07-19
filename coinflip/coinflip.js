@@ -37,13 +37,30 @@ const computerChoiceImage =
 const roundResultText = 
     document.querySelector("#round-result-text");
 
-const resetGameButotn =
-    document.querySelector(".reset-button")
+const resetGameButton =
+    document.querySelector(".reset-game");
+
+const finalResetButton =
+    document.querySelector("#final-reset-button");
+
 
 const choiceButtonMap = {
     heads: headsButton,
     tails: tailsButton
 };
+//-------Popup------//
+const gameOverPopup =
+    document.querySelector("#game-over-popup");
+
+const gameOverTitle = 
+    document.querySelector("#game-over-title");
+
+const gameOverImage =
+    document.querySelector("#game-over-image");
+
+const gameOverMessage =
+    document.querySelector("#game-over-message");
+
 
 //------Score Dots-------//
 const playerDots =
@@ -90,6 +107,7 @@ function clearRoundMessage() {
 function disableChoiceButtons() {
     headsButton.disabled = true;
     tailsButton.disabled = true;
+    resetGameButton.disabled = true;
 }
 function enableChoiceButtons (){
     headsButton.disabled = false;
@@ -147,7 +165,10 @@ else {
         updateScore(result.winner);
         displayRoundMessage(result.message);
         clearSelectedChoice();
-        enableChoiceButtons(); 
+        
+        if (!gameIsOver) {
+            enableChoiceButtons();
+        }
                
     }
 
@@ -209,16 +230,50 @@ nextPlayerDot.classList.add("dot-active");
 
 match.user++;
 }
+
+// Game over popup //
+function showGameOverPopup(title, image, alt, message) {
+    gameOverTitle.textContent = title;
+    gameOverImage.src = image;
+    gameOverImage.alt = alt;
+    gameOverMessage.textContent = message;
+
+    gameOverPopup.classList.remove("hidden");
+}
+
 // Update score //
 function updateScore(winner) {
     if (winner === "user") {
         lightNextPlayerDot();
+    // Shows popup after win //
+        if (match.user === match.targetWins) {
+            gameIsOver = true;
+
+            showGameOverPopup(
+                "YOU WIN!",
+                "coinflipImages/winner.gif",
+                "You won the game!",
+                "Congratulations! You reached 5 points first!"
+            );
+        }
     }
     
     else if (winner === "computer") {
         lightNextComputerDot();
+    // Shows lose popup //
+        if (match.computer === match.targetWins) {
+            gameIsOver = true;
+
+            showGameOverPopup(
+                "YOU LOSE!",
+                "coinflipImages/matchGameOver.gif",
+                "You lost the game!",
+                "You lost, Better luck next time!"
+            );
+        }
     }
 }
+
 
 // Reset button //
 function resetGame() {
@@ -230,9 +285,10 @@ function resetGame() {
     clearRoundDots();
     clearRoundMessage();
 
-    clearSelectedButton();
+    clearSelectedChoice();
     enableChoiceButtons();
-}
+    gameOverPopup.classList.add("hidden");
+};
 // Event Listeners //
 headsButton.addEventListener("click", () => {
     selectChoice(headsButton);
@@ -260,3 +316,6 @@ tailsButton.addEventListener("click", () => {
 resetGameButton.addEventListener("click", () => {
     resetGame();
 });
+finalResetButton.addEventListener("click", () => {
+    resetGame();
+})

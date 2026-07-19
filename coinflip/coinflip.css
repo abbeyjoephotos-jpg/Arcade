@@ -1,6 +1,4 @@
-* {
-    border: 2px solid red;
-}
+
 /* Header section */
 
 .title-box {
@@ -26,6 +24,9 @@
 header {
     display: flex;
     justify-content: center;
+    padding: 0 0;
+    margin-top: -10px;
+    
 }
 .hero {
     margin: 0;
@@ -44,11 +45,21 @@ header {
         );
     
 }
+#rules-top {
+    margin-top: -20px;
+    font-size: 18px;
+}
+#rules-bottom {
+    margin-top: -25px;
+    padding: 0 0;
+    font-size: 18px;
+}
 #instructions {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 0 0;
+    padding: 0 0;
     line-height: 1.2;
 
     font-family: monospace;
@@ -63,6 +74,24 @@ header {
     display: flex;
     justify-content: center;
 
+}
+.heads-img {
+    display: flex;
+    z-index: 2;
+    height: 96px;
+    width: auto;
+
+    margin-top: -10px;
+    margin-left: 86px;
+}
+.tails-img {
+    display: flex;
+    z-index: 2;
+    height: 90px;
+    width: auto;
+
+    margin-top: -8px;
+    margin-left: 92px;
 }
 #heads {
     margin-right: 50px;
@@ -181,7 +210,11 @@ button.choice-selected {
         0 0 18px #ff0000;
 }
 
-/* Winnder Screen */
+/* Winner Screen */
+.coinflip {
+    display: flex;
+    justify-content: center;
+}
 .coin-rolling {
     filter: blur(3px);
 }
@@ -214,3 +247,87 @@ button.choice-selected {
     display: flex;
     justify-content: center;
 }
+.reset-button {
+    font-family: monospace;
+    font-size: 65px;
+    font-weight: 900;
+    color: white;
+}
+
+/* Popup */
+
+#game-over-popup {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, 0.9);
+
+    z-index: 2000;
+}
+#game-over-popup.hidden {
+    display: none;
+}
+
+.game-over-box {
+    width: 700px;
+    max-width: 85%;
+
+    padding: 50px;
+
+    background-color: slategrey;
+
+    border: 6px double #f6f4f4;
+    border-radius: 18px;
+
+    text-align: center;
+
+    box-shadow:
+        0 0 25px #ff2a2a,
+        0 0 60px rgba(255, 0, 0, 0.8);
+
+     display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+#game-over-title {
+    color: #ff2a2a;
+    font-family: monospace;
+    font-size: 49px;
+
+    text-shadow:
+        0 0 10px #ff2a2a,
+        0 0 25px #ff0000;
+}
+
+#game-over-message {
+    color: white;
+    font-family: monospace;
+    font-size: 24px;
+    text-align: center;
+}
+
+#game-over-image {
+    width: 400px;
+    max-width: 90%;
+    height: auto;
+
+    display: block;
+    margin: 25px auto;
+}
+
+#final-reset-button {
+    width: 220px;
+    height: 70px;
+
+    font-size: 22px;
+    
+    display: block;
+    margin: 30px auto 0 auto;
+}
+
