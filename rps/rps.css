@@ -1,6 +1,4 @@
-* {
 
-}
 .title-box {
     width: fit-content;
 
@@ -19,7 +17,7 @@
     box-shadow:
         inset 0 0 12px rgba(255,255,255,.6),
         0 0 18px rgba(255,255,255,.25);
-        background:#202020;
+    background:#202020;
 
 }
 header {
@@ -195,7 +193,7 @@ body {
 .dots span {
     width: 18px;
     height: 18px;
-    border: 2px solid black;
+    border: 2px solid #ff9b9b;
     border-radius: 50%;
 }
 h2 {

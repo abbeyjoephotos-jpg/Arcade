@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Coin Flip Game</title>
+        <link rel="stylesheet" href="coinflip.css">
+        <script src="coinflip.js" defer></script>
+    </head>
+    <body>
+        <header>
+            <div class="title-box">
+                <p class="hero">Flip-A-Coin!</p>
+            </div>
+        </header>
+        <div id="instructions">
+            <p class="rules">~ Instructions: ~
+            <br>
+            - Choose your side either heads or tails -
+            <br>
+            - First to 5 wins the game -</p>     
+        </div>
+        <div class="dots-scoreboard">
+            <div class="dots-scores">
+                <div class="player-side">
+                    <h2>Player:</h2>
+                    <div class="dots player-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="dots-scores">
+                <div class="computer-side">
+                    <h2>Computer:</h2>   
+                    <div class="dots computer-dots">          
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="choice-buttons">
+            <button id="heads">(Heads)</button>
+            <button id="tails">(Tails)</button>
+        </div>
+        <div class="winner-screen">
+            <div class="coinflip">
+                <img id="computer-choice-image" class="choice-display-image" src="coinflipImages/headsImage.jpg" alt="">
+            </div>
+            <div class="win-screen">
+                <span class="screen-label">Result:</span>
+                <span id="round-result-text"></span>
+            </div>
+        </div>
+        <div class="reset-game">
+            <button class="reset-button">RESET GAME</button>
+        </div>
+    </body>
+</html>

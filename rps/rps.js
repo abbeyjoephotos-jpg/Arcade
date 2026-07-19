@@ -2,9 +2,9 @@
 const choices = ["rock", "paper", "scissors"];
 
 const choiceImages = {
-    rock: "images/buttonrock.png",
-    paper: "images/buttonpaper.png",
-    scissors: "images/buttonscissors.png"
+    rock: "rpsimages/buttonrock.png",
+    paper: "rpsimages/buttonpaper.png",
+    scissors: "rpsimages/buttonscissors.png"
 };
 // Game starting points //
 const match = {
